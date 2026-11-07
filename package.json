@@ -1,0 +1,22 @@
+{
+  "name": "automotive-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "API REST para gestão de automóveis com Express e SQLite",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
+  }
+}

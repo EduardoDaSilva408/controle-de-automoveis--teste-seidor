@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f6f8">
+    <title>Frota | Gestão de automóveis</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Frota, início">
+          <span class="brand-mark">F</span>
+          <span>frota<span class="brand-dot">.</span><small>GESTÃO DE VEÍCULOS</small></span>
+        </a>
+        <p class="nav-label">MENU PRINCIPAL</p>
+        <nav class="navigation" aria-label="Menu principal">
+          <button class="nav-link active" type="button" data-tab="automoveis"><span>▤</span> Automóveis</button>
+          <button class="nav-link" type="button" data-tab="motoristas"><span>♙</span> Motoristas</button>
+          <button class="nav-link" type="button" data-tab="utilizacoes"><span>↗</span> Utilizações</button>
+        </nav>
+        <div class="sidebar-note">
+          <span class="note-icon">i</span>
+          <p>Controle sua frota e acompanhe quem está ao volante.</p>
+        </div>
+        <div class="sidebar-footer"><span class="status-dot"></span> Sistema operacional</div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb">Gestão <span>/</span> <strong id="breadcrumb-current">Automóveis</strong></div>
+          <div class="topbar-right"><span class="live-dot"></span> API conectada</div>
+        </header>
+
+        <section class="page-section active" id="panel-automoveis">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">SUA FROTA, EM UM SÓ LUGAR</p>
+              <h1>Automóveis</h1>
+              <p class="page-description">Cadastre e gerencie os veículos da sua frota.</p>
+            </div>
+            <span class="section-icon">▤</span>
+          </div>
+          <div class="stat-grid">
+            <article class="stat-card"><span class="stat-icon blue">▤</span><div><span class="stat-label">VEÍCULOS CADASTRADOS</span><strong id="automoveis-count">0</strong></div></article>
+            <article class="stat-card"><span class="stat-icon green">↗</span><div><span class="stat-label">EM UTILIZAÇÃO</span><strong id="automoveis-active">0</strong></div></article>
+          </div>
+          <div class="content-card">
+            <div class="card-heading"><div><h2>Cadastro de automóveis</h2><p>Preencha os dados para adicionar um veículo.</p></div><span class="required-note">* Campos obrigatórios</span></div>
+            <form id="automovel-form" class="form-grid">
+              <input id="automovel-id" type="hidden">
+              <label>Placa <span>*</span><input id="automovel-placa" name="placa" placeholder="ABC1D23" maxlength="10" required></label>
+              <label>Marca <span>*</span><input id="automovel-marca" name="marca" placeholder="Ex.: Toyota" required></label>
+              <label>Cor <span>*</span><input id="automovel-cor" name="cor" placeholder="Ex.: Prata" required></label>
+              <div class="form-actions"><button class="button button-primary" type="submit" id="automovel-submit">+ Cadastrar automóvel</button><button class="button button-quiet hidden" type="button" data-cancel="automovel">Cancelar edição</button></div>
+            </form>
+          </div>
+          <div class="content-card">
+            <div class="card-heading list-heading"><div><h2>Veículos da frota <span class="count-pill" id="automoveis-list-count">0</span></h2><p>Consulte, edite ou remova um automóvel.</p></div></div>
+            <div class="toolbar">
+              <label class="search-control"><span>⌕</span><input id="automovel-id-search" type="number" min="1" placeholder="Buscar por identificador"><button class="button button-small" type="button" data-lookup="automoveis">Buscar ID</button></label>
+              <label class="filter-control"><span>Marca</span><input id="filter-marca" placeholder="Todas as marcas"></label>
+              <label class="filter-control"><span>Cor</span><input id="filter-cor" placeholder="Todas as cores"></label>
+              <button class="button button-outline" id="clear-auto-filters" type="button">Limpar filtros</button>
+            </div>
+            <div class="table-wrap"><table><thead><tr><th>ID</th><th>PLACA</th><th>MARCA</th><th>COR</th><th>STATUS</th><th class="actions-heading">AÇÕES</th></tr></thead><tbody id="automoveis-table"></tbody></table><div class="empty-state hidden" id="automoveis-empty">Nenhum automóvel encontrado. Cadastre um veículo acima.</div></div>
+          </div>
+        </section>
+
+        <section class="page-section" id="panel-motoristas">
+          <div class="page-heading">
+            <div><p class="eyebrow">QUEM CONDUZ SUA FROTA</p><h1>Motoristas</h1><p class="page-description">Mantenha os motoristas da sua equipe sempre atualizados.</p></div>
+            <span class="section-icon">♙</span>
+          </div>
+          <div class="stat-grid"><article class="stat-card"><span class="stat-icon violet">♙</span><div><span class="stat-label">MOTORISTAS CADASTRADOS</span><strong id="motoristas-count">0</strong></div></article><article class="stat-card"><span class="stat-icon green">↗</span><div><span class="stat-label">EM ATIVIDADE</span><strong id="motoristas-active">0</strong></div></article></div>
+          <div class="content-card">
+            <div class="card-heading"><div><h2>Cadastro de motoristas</h2><p>Informe o nome do motorista.</p></div><span class="required-note">* Campo obrigatório</span></div>
+            <form id="motorista-form" class="form-grid driver-form">
+              <input id="motorista-id" type="hidden">
+              <label>Nome completo <span>*</span><input id="motorista-nome" name="nome" placeholder="Ex.: Maria da Silva" required></label>
+              <div class="form-actions"><button class="button button-primary" type="submit" id="motorista-submit">+ Cadastrar motorista</button><button class="button button-quiet hidden" type="button" data-cancel="motorista">Cancelar edição</button></div>
+            </form>
+          </div>
+          <div class="content-card">
+            <div class="card-heading list-heading"><div><h2>Motoristas cadastrados <span class="count-pill" id="motoristas-list-count">0</span></h2><p>Consulte, edite ou remova um motorista.</p></div></div>
+            <div class="toolbar"><label class="search-control"><span>⌕</span><input id="motorista-id-search" type="number" min="1" placeholder="Buscar por identificador"><button class="button button-small" type="button" data-lookup="motoristas">Buscar ID</button></label><label class="filter-control name-filter"><span>Nome</span><input id="filter-nome" placeholder="Filtrar por nome"></label><button class="button button-outline" id="clear-driver-filter" type="button">Limpar filtro</button></div>
+            <div class="table-wrap"><table><thead><tr><th>ID</th><th>NOME</th><th>STATUS</th><th class="actions-heading">AÇÕES</th></tr></thead><tbody id="motoristas-table"></tbody></table><div class="empty-state hidden" id="motoristas-empty">Nenhum motorista encontrado. Cadastre um motorista acima.</div></div>
+          </div>
+        </section>
+
+        <section class="page-section" id="panel-utilizacoes">
+          <div class="page-heading">
+            <div><p class="eyebrow">ACOMPANHAMENTO DA OPERAÇÃO</p><h1>Utilizações</h1><p class="page-description">Registre a saída dos veículos e acompanhe as devoluções.</p></div>
+            <span class="section-icon">↗</span>
+          </div>
+          <div class="stat-grid"><article class="stat-card"><span class="stat-icon blue">↗</span><div><span class="stat-label">UTILIZAÇÕES REGISTRADAS</span><strong id="utilizacoes-count">0</strong></div></article><article class="stat-card"><span class="stat-icon orange">◷</span><div><span class="stat-label">EM ANDAMENTO</span><strong id="utilizacoes-active">0</strong></div></article></div>
+          <div class="content-card">
+            <div class="card-heading"><div><h2>Nova utilização</h2><p>Um motorista e um automóvel só podem ter uma utilização ativa por vez.</p></div><span class="required-note">* Campos obrigatórios</span></div>
+            <form id="utilizacao-form" class="form-grid usage-form">
+              <label>Motorista <span>*</span><select id="uso-motorista" required><option value="">Selecione um motorista disponível</option></select></label>
+              <label>Automóvel <span>*</span><select id="uso-automovel" required><option value="">Selecione um automóvel disponível</option></select></label>
+              <label>Data e hora de início <span>*</span><input id="uso-data-inicio" type="datetime-local" required></label>
+              <label class="wide-field">Motivo da utilização <span>*</span><textarea id="uso-motivo" rows="3" placeholder="Descreva o motivo da utilização" required></textarea></label>
+              <div class="form-actions"><button class="button button-primary" type="submit">+ Registrar utilização</button></div>
+            </form>
+          </div>
+          <div class="content-card">
+            <div class="card-heading list-heading"><div><h2>Histórico de utilizações <span class="count-pill" id="utilizacoes-list-count">0</span></h2><p>Motoristas, veículos utilizados e período de cada registro.</p></div></div>
+            <div class="toolbar"><button class="button button-outline" id="refresh-uses" type="button">↻ Atualizar lista</button></div>
+            <div class="table-wrap"><table><thead><tr><th>MOTORISTA</th><th>AUTOMÓVEL</th><th>MOTIVO</th><th>INÍCIO</th><th>FIM</th><th>STATUS</th><th class="actions-heading">AÇÕES</th></tr></thead><tbody id="utilizacoes-table"></tbody></table><div class="empty-state hidden" id="utilizacoes-empty">Nenhuma utilização registrada.</div></div>
+          </div>
+        </section>
+        <footer class="page-footer">Frota<span>.</span> &nbsp;·&nbsp; Gestão simples, controle completo.</footer>
+      </main>
+    </div>
+    <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
