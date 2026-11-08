@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      target: production
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_FILE: /app/data/automoveis.sqlite
+    volumes:
+      - automotive_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  automotive_data:

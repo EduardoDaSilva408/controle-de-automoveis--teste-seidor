@@ -2,12 +2,41 @@
 
 Aplicação web e API REST para administrar automóveis, motoristas e as utilizações dos veículos. Construída com Node.js, Express e SQLite; a interface web é servida pelo próprio Express.
 
-## Requisitos
+## Executar com Docker (recomendado)
+
+É necessário ter Docker Desktop instalado e em execução, com o suporte ao Docker Compose. Na pasta do projeto, construa a imagem e inicie a aplicação:
+
+```bash
+docker compose up --build -d
+```
+
+Acesse [http://localhost:3000](http://localhost:3000). O Compose instala as dependências durante a construção da imagem, configura o serviço e verifica sua disponibilidade. Para acompanhar os logs:
+
+```bash
+docker compose logs -f app
+```
+
+Para parar a aplicação:
+
+```bash
+docker compose down
+```
+
+O banco SQLite fica no volume persistente `automotive_data`; parar ou recriar o contêiner não apaga os dados. **Não use `docker compose down -v` a menos que queira apagar também o banco e todos os cadastros.**
+
+Os testes também podem ser executados em um contêiner separado, sem iniciar a aplicação:
+
+```bash
+docker build --target test -t automotive-api-test .
+docker run --rm automotive-api-test
+```
+
+## Instalação manual (sem Docker)
+
+Se não tiver Docker instalado, é possível executar o projeto diretamente. Requisitos:
 
 - Node.js 20.19 ou superior
 - npm
-
-## Instalação e execução
 
 Abra o terminal nesta pasta do projeto e instale as dependências:
 
